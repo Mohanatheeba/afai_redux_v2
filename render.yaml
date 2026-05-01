@@ -13,7 +13,6 @@ services:
       - key: DOCLING_SERVE_MAX_SYNC_WAIT
         value: 600
     plan: starter # ML models require at least 2GB-4GB RAM to be stable
-    healthCheckPath: /health
 
   # 2. AFAI Redux (The API Orchestrator)
   # This is the public endpoint your UI will call.
