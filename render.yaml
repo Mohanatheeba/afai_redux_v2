@@ -5,8 +5,7 @@ services:
   - type: pserv
     name: docling-serve
     runtime: image
-    imageContext:
-      url: ghcr.io/docling-project/docling-serve:v1.16.1
+    image: ghcr.io/docling-project/docling-serve:v1.16.1
     envVars:
       - key: DOCLING_SERVE_PORT
         value: 5001
