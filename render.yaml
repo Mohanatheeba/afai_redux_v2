@@ -1,0 +1,37 @@
+services:
+  # 1. Docling Serve (The Conversion Engine)
+  # We deploy this as a Private Service so it's not accessible from the public internet,
+  # but our afai-redux service can talk to it.
+  - type: pserv
+    name: docling-serve
+    runtime: image
+    imageContext:
+      url: ghcr.io/docling-project/docling-serve:v1.16.1
+    envVars:
+      - key: DOCLING_SERVE_PORT
+        value: 5001
+      - key: DOCLING_SERVE_MAX_SYNC_WAIT
+        value: 600
+    plan: starter # ML models require at least 2GB-4GB RAM to be stable
+    healthCheckPath: /health
+
+  # 2. AFAI Redux (The API Orchestrator)
+  # This is the public endpoint your UI will call.
+  - type: web
+    name: afai-redux
+    runtime: docker
+    plan: starter
+    envVars:
+      - key: DOCLING_SERVE_URL
+        value: http://docling-serve:5001
+      - key: DATABASE_URL
+        fromDatabase:
+          name: afai-db
+          property: connectionString
+    healthCheckPath: /health
+
+# 3. Managed PostgreSQL with pgvector
+databases:
+  - name: afai-db
+    plan: starter
+    ipAllowList: [] # Only allow internal access by default

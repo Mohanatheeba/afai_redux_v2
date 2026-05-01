@@ -1,0 +1,29 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+
+.pytest_cache/
+.coverage
+htmlcov/
+
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# Model / Docling caches
+.cache/
+models/
+
+# Ingestion debug artifacts
+*.jsonl
+out/
+
+# Legacy files with secrets
+RAW OLD Files/
